@@ -5,7 +5,7 @@
 const weatherForm = document.querySelector('.weatherForm');
 const cityInput = document.querySelector('.cityInput');
 const card = document.querySelector('.card');
-const apikey = "APIKEY";
+const apikey = "708999bf1c67e4b0a26f62da2ce91cea";
 
 // Event listener for form submission. 
 // Calls getWeatherData function and displays the weather information.
@@ -33,10 +33,8 @@ weatherForm.addEventListener("submit", async event => {
 })
 
 // Function to fetch weather data from the API.
-async function getWeatherData(city) {
-
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
-
+async function getWeatherData() {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=mancora&appid=${apikey}`
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
@@ -53,6 +51,8 @@ function displayWeatherInfo(data) {
         weather: [{ description, id }]
     } = data;
 
+    const capitalizedDescription = description.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+
     card.textContent = '';
     card.style.display = 'flex';
 
@@ -63,11 +63,11 @@ function displayWeatherInfo(data) {
     const weatherEmoji = document.createElement('p');
 
 
-    cityDisplay.textContent = city;
+    cityDisplay.textContent = `🇵🇪 ${city}`;
     cityDisplay.classList.add('cityDisplay');
     card.appendChild(cityDisplay);
 
-    tempDisplay.textContent = `Temperature: ${(temp - 273.15).toFixed(2)}°C`;
+    tempDisplay.textContent = `Temp🌡️: ${(temp - 273.15).toFixed(1)}°C`;
     tempDisplay.classList.add('tempDisplay');
     card.appendChild(tempDisplay);
 
@@ -75,9 +75,10 @@ function displayWeatherInfo(data) {
     humidityDisplay.classList.add('humidityDisplay');
     card.appendChild(humidityDisplay);
 
-    descriptionDisplay.textContent = description;
+    descriptionDisplay.textContent = capitalizedDescription;
     descriptionDisplay.classList.add('descriptionDisplay');
     card.appendChild(descriptionDisplay);
+
 
     weatherEmoji.textContent = getWeatherEmoji(id);
     weatherEmoji.classList.add('weatherEmoji');
