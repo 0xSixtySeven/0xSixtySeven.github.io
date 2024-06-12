@@ -33,8 +33,8 @@ weatherForm.addEventListener("submit", async event => {
 })
 
 // Function to fetch weather data from the API.
-async function getWeatherData() {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=mancora&appid=${apikey}`
+async function getWeatherData(city) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
